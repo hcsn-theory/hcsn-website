@@ -137,9 +137,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
-          <p className="text-center text-sm text-muted-foreground md:text-left">
-            &copy; {new Date().getFullYear()} HCSN Research. Open Science License.
-          </p>
+            &copy; {new Date().getFullYear()} HCSN Research. Distributed under the MIT License.
           <div className="flex gap-4 text-sm text-muted-foreground">
             <Link href="#" className="hover:text-foreground">Privacy Policy</Link>
             <Link href="#" className="hover:text-foreground">Terms of Service</Link>

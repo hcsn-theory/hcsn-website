@@ -110,7 +110,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             {[
-              { label: "Canonical Docs", value: "4", icon: BookOpen },
+              { label: "Canonical Docs", value: "5", icon: BookOpen },
               { label: "Core Concepts", value: "6", icon: Layers },
               { label: "Simulations", value: "100+", icon: Activity },
               { label: "Emergence", value: "100%", icon: Network },
@@ -206,7 +206,7 @@ export default function Home() {
       {/* Documentation Overview */}
       <Section
         title="Documentation"
-        subtitle="The four canonical documents"
+        subtitle="The five canonical documents"
         className="bg-background"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

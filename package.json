@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "HCSN Theory - A pre-geometric framework for emergent physics",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "next dev",

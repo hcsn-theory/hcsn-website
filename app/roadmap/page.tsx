@@ -74,10 +74,10 @@ export default function Roadmap() {
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>✓ Worldline definition & persistence</li>
-              <li>✓ Particle criteria (empirical)</li>
-              <li>✓ Momentum operationalization</li>
-              <li>✓ Mass-lifetime relation</li>
-              <li>✓ Rewrite competition mechanism</li>
+              <li>✓ Particle criteria (empirical & maturity threshold)</li>
+              <li>✓ Momentum & mass operationalization</li>
+              <li>✓ Topological Force Law ($k=182.1, \chi_c=0.14$)</li>
+              <li>✓ Back-scattering bias ($71.5^\circ$)</li>
             </ul>
           </Card>
 
@@ -86,8 +86,8 @@ export default function Roadmap() {
               Documentation Consolidation
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>✓ 4 canonical documents created</li>
-              <li>✓ 15+ earlier drafts archived</li>
+              <li>✓ 5 canonical documents created</li>
+              <li>✓ 20+ earlier drafts archived</li>
               <li>✓ Concepts deduplicated</li>
               <li>✓ Claims graded by empirical status</li>
             </ul>

@@ -155,6 +155,7 @@ export default function About() {
               <li>✓ Emergent particle-like objects (defect worldlines)</li>
               <li>✓ Operational definitions of momentum and mass</li>
               <li>✓ Rewrite-mediated interaction mechanism</li>
+              <li>✓ Particle condensation mechanics and maturity threshold ($\tau_c$)</li>
               <li>✓ Partial evidence for finite-dimensional emergence</li>
             </ul>
             <p className="text-muted-foreground mt-4">

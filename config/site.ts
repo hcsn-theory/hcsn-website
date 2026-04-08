@@ -47,6 +47,13 @@ export const documentationItems = [
     status: 'In Progress',
     link: '/docs/04_geometry_dimension_uncertainty_and_limits',
   },
+  {
+    id: 'emergence',
+    title: 'Emergence of Particles',
+    description: 'Mechanics of matter condensation: pillars, nucleation, and scaling.',
+    status: 'Validated',
+    link: '/docs/05_emergence_of_particles',
+  },
 ];
 
 export const coreIdeas = [
@@ -80,6 +87,11 @@ export const coreIdeas = [
     description:
       'All physical quantities are defined operationally from rewrite histories and measurements.',
   },
+  {
+    title: 'Topological Force Law',
+    description:
+      'Interaction is non-zero iff structural overlap $\chi > 0.14$. Strength follows $F \sim k/\chi$ with coupling $k=182.1$.',
+  },
 ];
 
 export const roadmapItems = [
@@ -101,7 +113,7 @@ export const roadmapItems = [
     title: 'Particle Interactions & Dynamics',
     status: 'Completed',
     description:
-      'Defect worldlines, rewrite competition, momentum and mass definitions.',
+      'Formalized threshold-gated interaction ($\chi_c=0.14$), topological force law ($k=182.1$), and back-scattering bias ($71.5^\circ$).',
   },
   {
     phase: 'Phase 17+',
