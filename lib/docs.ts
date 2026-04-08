@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-const docsDirectory = path.join(process.cwd(), '..', 'docs');
+const docsDirectory = path.join(process.cwd(), 'docs');
 
 export interface Doc {
   slug: string;
