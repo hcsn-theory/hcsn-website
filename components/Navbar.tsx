@@ -14,7 +14,7 @@ export function Navbar() {
   const pathname = usePathname()
   const { setTheme, theme } = useTheme()
 
-  if (pathname === '/simulation') return null;
+  if (pathname === '/simulation' || pathname === '/logs') return null;
 
   const navItems = [
     { label: "Home", href: "/" },

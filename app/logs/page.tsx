@@ -2,11 +2,18 @@
 
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { FileJson, FileText, FolderTree, RefreshCw, X, Download, ExternalLink } from "lucide-react"
+import { FileJson, FileText, FolderTree, RefreshCw, X, Download, ExternalLink, ArrowLeft } from "lucide-react"
+import Link from "next/link"
 
 import { Card } from "@/components/Card"
 import { Badge } from "@/components/Badge"
 import { cn } from "@/lib/utils"
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import 'katex/dist/katex.min.css'
+import { JsonViewer } from '@/components/JsonViewer'
 
 // GitHub API types
 type GitHubNode = {
@@ -25,6 +32,7 @@ export default function LogsPage() {
   
   const [selectedFile, setSelectedFile] = React.useState<GitHubNode | null>(null)
   const [fileContent, setFileContent] = React.useState<string | null>(null)
+  const [parsedJsonData, setParsedJsonData] = React.useState<any>(null)
   const [contentLoading, setContentLoading] = React.useState(false)
 
   const fetchFiles = React.useCallback(async () => {
@@ -32,18 +40,20 @@ export default function LogsPage() {
     setError(null)
     try {
       // Fetch repo tree recursively
-      const res = await fetch("https://api.github.com/repos/hcsn-theory/hcsn-sim/git/trees/main?recursive=1")
+      const res = await fetch("https://api.github.com/repos/hcsn-theory/hcsn-rust/git/trees/main?recursive=1")
       if (!res.ok) {
         throw new Error("Failed to fetch repository data")
       }
       const data = await res.json()
       
-      // Filter for files with .log and .json
+      // Filter for files in exports/ and hypotheses/ to avoid clutter
       const relevantFiles = data.tree.filter(
         (node: GitHubNode) => 
           node.type === "blob" && 
-          (node.path.endsWith(".log") || node.path.endsWith(".json"))
-      ).sort((a: GitHubNode, b: GitHubNode) => b.path.localeCompare(a.path)) // Descending to see latest names if timestamped
+          (node.path.startsWith("exports/") || node.path.startsWith("hypotheses/")) &&
+          !node.path.includes("legacy_archive/") &&
+          (node.path.endsWith(".json") || node.path.endsWith(".csv") || node.path.endsWith(".md") || node.path.endsWith(".txt"))
+      ).sort((a: GitHubNode, b: GitHubNode) => b.path.localeCompare(a.path))
       
       setFiles(relevantFiles)
     } catch (err: any) {
@@ -67,7 +77,7 @@ export default function LogsPage() {
     const fetchContent = async () => {
       setContentLoading(true)
       try {
-        const rawUrl = `https://raw.githubusercontent.com/hcsn-theory/hcsn-sim/main/${selectedFile.path}`
+        const rawUrl = `https://raw.githubusercontent.com/hcsn-theory/hcsn-rust/main/${selectedFile.path}`
         
         // Handle potentially large files by not fully downloading them if they're massive,
         // but for now we just fetch directly
@@ -77,9 +87,11 @@ export default function LogsPage() {
         let text = await res.text()
         
         // Prettify JSON if applicable
+        setParsedJsonData(null)
         if (selectedFile.path.endsWith('.json')) {
           try {
             const parsed = JSON.parse(text)
+            setParsedJsonData(parsed)
             text = JSON.stringify(parsed, null, 2)
           } catch (e) {
             // Ignore if invalid JSON
@@ -117,38 +129,31 @@ export default function LogsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
-      <div className="mb-8 hidden md:flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-extrabold tracking-tight mb-2">Simulation Logs</h1>
-          <p className="text-muted-foreground text-lg">
-            Dynamically generated logs and data exports from the HCSN simulator.
-          </p>
+    <div className="flex flex-col h-screen w-full bg-background p-4 md:p-6 overflow-hidden max-w-[1600px] mx-auto">
+      {/* Header Area */}
+      <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between shrink-0 gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+          <div>
+            <h1 className="text-xl md:text-2xl font-extrabold tracking-tight">HCSN Engine Logs</h1>
+          </div>
+          <div className="h-4 w-px bg-border hidden sm:block"></div>
+          <nav className="flex items-center gap-3 text-sm font-medium text-muted-foreground">
+            <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
+            <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
+            <Link href="/docs" className="hover:text-foreground transition-colors">Docs</Link>
+            <Link href="/simulation" className="hover:text-foreground transition-colors">Simulation</Link>
+          </nav>
         </div>
         <button 
           onClick={fetchFiles}
-          className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+          className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4"
         >
           <RefreshCw className={cn("mr-2 h-4 w-4", loading && "animate-spin")} />
-          Refresh
+          <span>Refresh</span>
         </button>
       </div>
 
-      <div className="md:hidden mb-6">
-        <h1 className="text-3xl font-extrabold tracking-tight mb-2">Logs & Data</h1>
-        <p className="text-muted-foreground mb-4">
-          Latest outputs from the HCSN simulations.
-        </p>
-        <button 
-          onClick={fetchFiles}
-          className="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-9 px-3"
-        >
-          <RefreshCw className={cn("mr-2 h-4 w-4", loading && "animate-spin")} />
-          Refresh List
-        </button>
-      </div>
-
-      <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-200px)] min-h-[600px]">
+      <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0 overflow-hidden">
         
         {/* Sidebar - File List */}
         <div className="w-full lg:w-1/3 flex flex-col rounded-xl border bg-card/50 backdrop-blur-sm overflow-hidden shadow-sm">
@@ -255,7 +260,7 @@ export default function LogsPage() {
                   </div>
                   <div className="flex items-center space-x-2 flex-shrink-0">
                     <a 
-                      href={`https://github.com/hcsn-theory/hcsn-sim/blob/main/${selectedFile.path}`}
+                      href={`https://github.com/hcsn-theory/hcsn-rust/blob/main/${selectedFile.path}`}
                       target="_blank"
                       rel="noreferrer"
                       className="p-2 rounded-md hover:bg-accent text-muted-foreground hover:text-foreground transition-colors"
@@ -280,7 +285,7 @@ export default function LogsPage() {
                   </div>
                 </div>
                 
-                <div className="flex-1 overflow-auto bg-zinc-950 p-4 font-mono text-sm relative">
+                <div className="flex-1 overflow-auto bg-zinc-950 font-mono text-sm relative dark text-foreground">
                   {contentLoading ? (
                     <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10">
                       <RefreshCw className="h-8 w-8 animate-spin text-zinc-400" />
@@ -288,9 +293,19 @@ export default function LogsPage() {
                   ) : null}
                   
                   {fileContent ? (
-                    <pre className="text-zinc-300 whitespace-pre-wrap break-words">
-                      {fileContent}
-                    </pre>
+                    selectedFile.path.endsWith('.md') ? (
+                      <div className="prose max-w-none prose-sm font-sans p-6">
+                        <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>{fileContent}</ReactMarkdown>
+                      </div>
+                    ) : selectedFile.path.endsWith('.json') && parsedJsonData ? (
+                      <div className="p-4">
+                        <JsonViewer data={parsedJsonData} />
+                      </div>
+                    ) : (
+                      <pre className="text-zinc-300 whitespace-pre-wrap break-words p-4">
+                        {fileContent}
+                      </pre>
+                    )
                   ) : (
                     !contentLoading && (
                       <div className="text-zinc-500 flex h-full items-center justify-center">

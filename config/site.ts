@@ -90,7 +90,7 @@ export const coreIdeas = [
   {
     title: 'Topological Force Law',
     description:
-      'Interaction is non-zero iff structural overlap $\chi > 0.14$. Strength follows $F \sim k/\chi$ with coupling $k=182.1$.',
+      'Interaction is non-zero iff structural overlap χ > 0.14. Strength follows F ≈ k/χ with coupling k=182.1.',
   },
 ];
 

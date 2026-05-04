@@ -36,7 +36,7 @@ export function Footer() {
     }
   };
 
-  if (pathname === '/simulation') return null;
+  if (pathname === '/simulation' || pathname === '/logs') return null;
 
   return (
     <footer className="border-t bg-background">

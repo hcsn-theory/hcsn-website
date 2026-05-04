@@ -76,8 +76,8 @@ export default function Roadmap() {
               <li>✓ Worldline definition & persistence</li>
               <li>✓ Particle criteria (empirical & maturity threshold)</li>
               <li>✓ Momentum & mass operationalization</li>
-              <li>✓ Topological Force Law ($k=182.1, \chi_c=0.14$)</li>
-              <li>✓ Back-scattering bias ($71.5^\circ$)</li>
+              <li>✓ Topological Force Law (k=182.1, χ_c=0.14)</li>
+              <li>✓ Back-scattering bias (71.5°)</li>
             </ul>
           </Card>
 

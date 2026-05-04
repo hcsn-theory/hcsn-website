@@ -31,14 +31,14 @@ export default function Figures() {
       id: 'interaction-scattering',
       title: 'Topological Force Law',
       caption:
-        'Threshold-gated interaction ($\chi_c=0.14$). Strength follows $F \sim k/\chi$ with coupling $k=182.1$ and back-scattering bias ($71.5^\circ$).',
+        'Threshold-gated interaction (χ_c=0.14). Strength follows F ≈ k/χ with coupling k=182.1 and back-scattering bias (71.5°).',
       source: 'Simulation' as const,
     },
     {
       id: 'particle-condensation',
-      title: 'Nucleation Threshold ($\tau_c$)',
+      title: 'Nucleation Threshold (τ_c)',
       caption:
-        'Transition from noise to persistent matter. Maturity point verified at $\tau_c \approx 600–1000$ rewrite steps.',
+        'Transition from noise to persistent matter. Maturity point verified at τ_c ≈ 600–1000 rewrite steps.',
       source: 'Simulation' as const,
     },
     {

@@ -1,9 +1,37 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Terminal, Cpu, Zap, WifiOff, Globe, Settings, Link2, LayoutGrid, X } from 'lucide-react';
+import { Terminal, Cpu, Zap, WifiOff, Globe, Settings, Link2, LayoutGrid, X, Copy, Check } from 'lucide-react';
 
 const DEFAULT_URL = 'http://localhost:8765';
+
+const CopyableCode = ({ code, color = "text-[#00d4ff]", border = "border-white/10" }: { code: string, color?: string, border?: string }) => {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <div className={`relative group p-3 bg-black/60 rounded border ${border} text-xs overflow-x-auto whitespace-nowrap pr-10 shadow-inner`}>
+      <code className={color}>
+        {code.split('\n').map((line, i, arr) => (
+          <React.Fragment key={i}>
+            {line}
+            {i < arr.length - 1 && <br/>}
+          </React.Fragment>
+        ))}
+      </code>
+      <button 
+        onClick={handleCopy}
+        className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-white/5 hover:bg-white/10 rounded border border-white/10 text-white/50 hover:text-white transition-all opacity-0 group-hover:opacity-100"
+        title="Copy to clipboard"
+      >
+        {copied ? <Check className="w-3.5 h-3.5 text-[#00ffb2]" /> : <Copy className="w-3.5 h-3.5" />}
+      </button>
+    </div>
+  );
+};
 
 export default function SimulationPage() {
   const [observerUrl, setObserverUrl] = useState<string>(DEFAULT_URL);
@@ -135,56 +163,23 @@ export default function SimulationPage() {
                   HCSN node to broadcast causal structure data.
                 </p>
 
-                <div className="bg-black/60 rounded-xl border border-white/5 p-6 space-y-4">
-                  <div className="flex items-center justify-between text-white/90 text-sm">
-                    <div className="flex items-center gap-3">
-                      <Terminal className="w-4 h-4 text-[#FF9500]" />
-                      <span>{isLocal ? 'Local Activation:' : 'Remote Node Link:'}</span>
-                    </div>
-                    <a 
-                      href="https://github.com/hcsn-theory/hcsn-viz" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-[10px] text-[#00d4ff] hover:underline opacity-60 hover:opacity-100 transition-opacity"
-                    >
-                      github.com/hcsn-theory/hcsn-viz
-                    </a>
+                <div className="grid grid-cols-2 gap-4 pt-2">
+                  <div className="p-4 bg-[#FF9500]/5 border border-[#FF9500]/10 rounded-xl text-center">
+                    <Cpu className="w-5 h-5 text-[#FF9500] mx-auto mb-2" />
+                    <span className="text-[10px] text-[#FF9500]/60 block uppercase leading-none mb-1">Node Type</span>
+                    <span className="text-xs text-[#FF9500] font-bold">{isLocal ? 'Localhost' : 'Remote'}</span>
                   </div>
-
-                  {isLocal && (
-                    <div className="p-3 bg-[#FF9500]/5 border border-[#FF9500]/10 rounded-lg text-[11px] text-[#FF9500]/80 italic">
-                      Note: The visualizer pulls and compiles the simulation logic directly from your local <span className="font-bold">hcsn-rust</span> directory.
-                    </div>
-                  )}
-                  
-                  <div className="space-y-3 font-mono text-[13px]">
-                    {isLocal ? (
-                      <>
-                        <div className="flex items-start gap-4 text-white/50">
-                          <span className="w-4 h-4 flex-shrink-0 bg-white/5 rounded flex items-center justify-center text-[10px] mt-1">1</span>
-                          <p>Open local terminal in <code className="text-[#FF9500] bg-[#FF9500]/10 px-1 rounded">hcsn-viz</code></p>
-                        </div>
-                        <div className="flex items-start gap-4 text-white/50">
-                          <span className="w-4 h-4 flex-shrink-0 bg-white/5 rounded flex items-center justify-center text-[10px] mt-1">2</span>
-                          <p>Execute binary:</p>
-                        </div>
-                        <div className="ml-8 p-3 bg-white/5 rounded border border-white/10 text-[#00d4ff] relative group">
-                          <code>cargo run --release</code>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="flex items-start gap-4 text-white/50">
-                        <Link2 className="w-4 h-4 text-[#00d4ff] mt-1" />
-                        <p>Waiting for broadcast from <span className="text-[#00d4ff]">{observerUrl}</span>. Ensure the remote node has port 8765 exposed.</p>
-                      </div>
-                    )}
+                  <div className="p-4 bg-[#00d4ff]/5 border border-[#00d4ff]/10 rounded-xl text-center">
+                    <Zap className="w-5 h-5 text-[#00d4ff] mx-auto mb-2" />
+                    <span className="text-[10px] text-[#00d4ff]/60 block uppercase leading-none mb-1">Observer</span>
+                    <span className="text-xs text-[#00d4ff] font-bold">Warp v0.3</span>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <button 
                     onClick={() => setRetryCount(c => c + 1)}
-                    className="py-4 bg-white text-black font-bold rounded-xl hover:bg-[#00d4ff] transition-colors active:scale-95 duration-200"
+                    className="py-4 bg-white text-black font-bold rounded-xl hover:bg-[#00d4ff] transition-colors active:scale-95 duration-200 shadow-[0_0_15px_rgba(255,255,255,0.1)]"
                   >
                     Retry Connection
                   </button>
@@ -196,16 +191,52 @@ export default function SimulationPage() {
                   </button>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 pt-2">
-                  <div className="p-4 bg-[#FF9500]/5 border border-[#FF9500]/10 rounded-xl text-center">
-                    <Cpu className="w-5 h-5 text-[#FF9500] mx-auto mb-2" />
-                    <span className="text-[10px] text-[#FF9500]/60 block uppercase leading-none mb-1">Node Type</span>
-                    <span className="text-xs text-[#FF9500] font-bold">{isLocal ? 'Localhost' : 'Remote'}</span>
+                <div className="bg-black/40 rounded-xl border border-white/5 p-5 shadow-inner">
+                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
+                    <div className="flex items-center gap-2">
+                      <Terminal className="w-4 h-4 text-[#00d4ff]" />
+                      <span className="text-sm font-bold text-white/90">Quick Start</span>
+                    </div>
+                    {isLocal && (
+                      <span className="text-[10px] text-[#FF9500] font-mono px-2 py-0.5 bg-[#FF9500]/10 rounded border border-[#FF9500]/20">
+                        Local Node
+                      </span>
+                    )}
                   </div>
-                  <div className="p-4 bg-[#00d4ff]/5 border border-[#00d4ff]/10 rounded-xl text-center">
-                    <Zap className="w-5 h-5 text-[#00d4ff] mx-auto mb-2" />
-                    <span className="text-[10px] text-[#00d4ff]/60 block uppercase leading-none mb-1">Observer</span>
-                    <span className="text-xs text-[#00d4ff] font-bold">Warp v0.3</span>
+
+                  <div className="space-y-4 font-mono text-[11px] md:text-xs">
+                    {isLocal ? (
+                      <>
+                        <div>
+                          <div className="flex items-center justify-between mb-1.5 px-1">
+                            <span className="text-white/70 font-bold">1. Clone Setup</span>
+                            <a href="https://github.com/hcsn-theory" target="_blank" rel="noreferrer" className="text-[10px] text-[#00d4ff]/60 hover:text-[#00d4ff] transition-colors">github.com/hcsn-theory</a>
+                          </div>
+                          <CopyableCode code={`git clone https://github.com/hcsn-theory/hcsn-rust.git\ngit clone https://github.com/hcsn-theory/hcsn-viz.git`} />
+                        </div>
+                        
+                        <div className="pt-2">
+                          <div className="flex items-center justify-between mb-1.5 px-1">
+                            <span className="text-[#00ffb2] font-bold">2. Normal Mode</span>
+                            <span className="text-[10px] text-white/40">Assisted Survival</span>
+                          </div>
+                          <CopyableCode code={`cd hcsn-viz && cargo run --release`} />
+                        </div>
+
+                        <div className="pt-2">
+                          <div className="flex items-center justify-between mb-1.5 px-1">
+                            <span className="text-[#ff4b4b] font-bold">3. Aggressive Mode</span>
+                            <span className="text-[10px] text-white/40">Max Entropy</span>
+                          </div>
+                          <CopyableCode code={`cd hcsn-viz && HCSN_AGGRESSIVE_MODE=1 cargo run --release`} color="text-[#ff4b4b]" border="border-[#ff4b4b]/30" />
+                        </div>
+                      </>
+                    ) : (
+                      <div className="flex items-start gap-3 text-white/50 p-2">
+                        <Link2 className="w-4 h-4 text-[#00d4ff]" />
+                        <p className="leading-tight">Waiting for broadcast from <span className="text-[#00d4ff]">{observerUrl}</span>. Ensure remote node exposes port 8765.</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
