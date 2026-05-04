@@ -81,7 +81,7 @@ export default function Contact() {
               <div>
                 <p className="font-medium text-foreground">Simulation Code</p>
                 <p className="text-sm text-muted-foreground mb-1">Open-source codebase for the causal network simulations.</p>
-                <a href="https://github.com/hcsn-theory/hcsn-sim" className="text-blue-600 hover:text-blue-800 font-medium transition-colors">hcsn-theory/hcsn-sim</a>
+                <a href="https://github.com/hcsn-theory/hcsn-rust" className="text-blue-600 hover:text-blue-800 font-medium transition-colors">hcsn-theory/hcsn-sim</a>
               </div>
             </div>
           </Card>
