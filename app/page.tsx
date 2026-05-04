@@ -110,10 +110,10 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             {[
+              { label: "Partial Collapse", value: "53.5%", icon: Layers },
+              { label: "Fragile Conservation", value: "-0.47 ρ", icon: Activity },
+              { label: "Matter Universality", value: "100%", icon: Network },
               { label: "Canonical Docs", value: "5", icon: BookOpen },
-              { label: "Core Concepts", value: "6", icon: Layers },
-              { label: "Simulations", value: "100+", icon: Activity },
-              { label: "Emergence", value: "100%", icon: Network },
             ].map((stat, idx) => (
               <div key={idx} className="flex flex-col items-center p-4">
                 <stat.icon className="w-6 h-6 text-primary mb-2 opacity-80" />

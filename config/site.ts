@@ -73,9 +73,9 @@ export const coreIdeas = [
       'Particles, geometry, and forces arise from rewrite statistics—not postulated.',
   },
   {
-    title: 'Order Parameter Ω',
+    title: 'Order Parameter γ & Ω',
     description:
-      'Hierarchical closure (Ω) regulates structure. It modulates, not propagates.',
+      'Hierarchical closure (Ω) and non-linear coupling (γ) regulate structure. The phase transition to matter is multi-dimensional.',
   },
   {
     title: 'Transport Without Geometry',
@@ -102,31 +102,30 @@ export const roadmapItems = [
     description: 'Axioms, rewrite rules, initial simulation validation.',
   },
   {
-    phase: 'Phase 11',
-    title: 'Phase Transitions & Corrections',
+    title: 'Phase Transitions & Criticality',
     status: 'Completed',
     description:
-      'Discovery of Ω phase structure. Corrected earlier Ω-carrier claims.',
+      'Discovery of multi-dimensional criticality. Corrected earlier monotonic phase claims via γ-sweeps.',
   },
   {
     phase: 'Phase 12–16',
-    title: 'Particle Interactions & Dynamics',
+    title: 'Rigorous Validation (v3.1)',
     status: 'Completed',
     description:
-      'Formalized threshold-gated interaction ($\chi_c=0.14$), topological force law ($k=182.1$), and back-scattering bias ($71.5^\circ$).',
+      'Empirical proof of Partial Correlation Collapse (53.5%) and Robust Universality (100% Volume in Control mode).',
   },
   {
     phase: 'Phase 17+',
-    title: 'Dimensional Selection & Scaling',
+    title: 'Fragile Emergent Conservation',
     status: 'Current',
     description:
-      'Large-scale structure, dimension stabilization, continuum limits.',
+      'Observation of approximate momentum conservation (ρ = -0.47) emerging naturally from topology without axiomatic patches.',
   },
   {
     phase: 'Future',
-    title: 'Emergent Structures',
+    title: 'Dimensional Selection & Continuum',
     status: 'Planned',
     description:
-      'Gauge symmetry, conservation laws, possible connections to external frameworks.',
+      'Large-scale dimension stabilization, exact invariance principles, and formalizing the statistical limits.',
   },
 ];

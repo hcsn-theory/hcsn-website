@@ -61,9 +61,9 @@ export default function Roadmap() {
               Phase 11: Phase Transitions
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>✓ Ω phase diagram discovery</li>
-              <li>✓ Critical transition at Ω ≈ 1.1</li>
-              <li>✓ Corrected Ω-carrier misconception</li>
+              <li>✓ Multi-dimensional phase diagram discovery</li>
+              <li>✓ Inconsistent Criticality across γ-sweeps</li>
+              <li>✓ Corrected single-scalar phase boundary misconceptions</li>
               <li>✓ ξ transport capacity mapping</li>
             </ul>
           </Card>
@@ -115,8 +115,7 @@ export default function Roadmap() {
               theories be derived from discrete rewrites?
             </li>
             <li>
-              <strong>Universality:</strong> Are results robust across different
-              rule sets?
+              <strong>Rigorous Universality:</strong> Verified that the Matter Phase is 100% robust even in unassisted Control modes.
             </li>
             <li>
               <strong>Long-time behavior:</strong> Beyond 10⁵ rewrites,
